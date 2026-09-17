@@ -106,6 +106,10 @@ const projects = [
     description: 'Personal developer portfolio built with Vue 3 and Vite, featuring reusable components, Vue Router navigation, responsive layouts and interactive UI elements.',
     image: '/portfolio.jpg',
     links: {
+      external: 'https://nurul-lidiya-portfolio.vercel.app/',
+      externalLabel: 'Live Demo',
+      internal: 'https://github.com/nurullidiyaa/nurul-lidiya-portfolio',
+      internalLabel: 'GitHub'
     }
   }
 ]
