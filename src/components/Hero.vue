@@ -514,16 +514,17 @@ const scrollToSection = (selector) => {
 
 @media (max-width: 900px) {
   .hero {
-    padding-top: 110px;
+    padding-top: 100px;
   }
 
   .hero-content {
     grid-template-columns: 1fr;
     text-align: center;
+    gap: 1.5rem;
   }
 
   .hero-description {
-    margin: 0 auto 2rem;
+    margin: 0 auto 1.75rem;
   }
 
   .hero-buttons {
@@ -540,32 +541,42 @@ const scrollToSection = (selector) => {
 
   .hero-image {
     max-width: 220px;
-
     order: -1;
-
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
   }
 }
 
 @media (max-width: 600px) {
   .hero {
     min-height: auto;
+    padding: 100px 1.25rem 3.5rem;
+  }
 
-    padding:
-      110px 1.25rem
-      4rem;
+  .hero-content {
+    gap: 1.25rem;
+  }
+
+  .hero-image {
+    max-width: 210px;
+  }
+
+  .status-badge {
+    margin-bottom: 1.1rem;
+    font-size: 0.82rem;
   }
 
   .hero-title {
-    font-size: 2.8rem;
+    font-size: 2.6rem;
+    margin-bottom: 0.6rem;
   }
 
   .greeting {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
   }
 
   .hero-subtitle {
-    font-size: 1.25rem;
+    margin: 1rem 0 1.25rem;
+    font-size: 1.2rem;
   }
 
   .role-divider {
@@ -574,24 +585,35 @@ const scrollToSection = (selector) => {
 
   .secondary-role {
     display: block;
-    margin-top: 0.25rem;
+    margin-top: 0.2rem;
   }
 
   .hero-description {
-    font-size: 1rem;
+    max-width: 500px;
+    margin-bottom: 1.75rem;
+    font-size: 0.98rem;
+    line-height: 1.65;
   }
 
   .hero-buttons {
     flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
   }
 
   .btn {
     width: 100%;
     text-align: center;
+    padding: 0.8rem 1.5rem;
   }
 
   .hero-socials {
-    gap: 1rem 1.25rem;
+    justify-content: center;
+    gap: 0.75rem 1rem;
+  }
+
+  .hero-socials a {
+    font-size: 0.88rem;
   }
 }
 </style>
