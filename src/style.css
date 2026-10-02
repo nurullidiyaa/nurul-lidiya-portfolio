@@ -5,24 +5,107 @@
 }
 
 :root {
-  font-family: 'Inter', 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
-  /* Modern dark palette */
-  --color-bg: #1e1e1e;           /* dark background */
-  --color-text: #e0e0e0;         /* light gray text */
-  --color-accent: #00bcd4;       /* cyan accent */
-  --color-accent-hover: #0097a7; /* darker cyan hover */
-  --color-card-bg: #2c2c2c;      /* card dark background */
-  --color-card-border: #444;     /* subtle border */
-  --color-muted: #aaa;           /* muted text */
-  --color-scrollbar: #555;
-  --color-scrollbar-hover: #888;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: clamp(1.375rem, 2vw, 1.5rem);
+  --text-3xl: clamp(1.75rem, 3.2vw, 2.25rem);
+  --text-display: clamp(2.25rem, 5vw, 3.25rem);
+
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-body: 1.65;
+
+  font-family: var(--font-sans);
+  line-height: var(--leading-body);
+  font-weight: var(--font-weight-regular);
+
+  /* Color: surfaces */
+  --color-bg: #121212;
+  --color-bg-elevated: #171717;
+  --color-surface: #1a1a1a;
+  --color-surface-hover: #222222;
+
+  /* Color: text */
+  --color-text: #f2f2f2;
+  --color-text-muted: #a8a8a8;
+  --color-text-subtle: #7a7a7a;
+
+  /* Color: accent (use sparingly) */
+  --color-accent: #00bcd4;
+  --color-accent-hover: #00acc1;
+  --color-accent-soft: rgba(0, 188, 212, 0.12);
+
+  /* Color: status */
+  --color-success: #4caf50;
+  --color-success-text: #81c784;
+  --color-success-soft: rgba(76, 175, 80, 0.12);
+  --color-error: #e57373;
+
+  /* Color: borders */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+
+  /* Focus */
+  --focus-ring-color: var(--color-accent);
+  --focus-ring: 0 0 0 3px rgba(0, 188, 212, 0.35);
+
+  /* Layout */
+  --container-width: 1120px;
+  --container-narrow: 760px;
+  --section-padding-y: clamp(4rem, 10vw, 7.5rem);
+  --section-padding-x: clamp(1.25rem, 4vw, 2rem);
+
+  /* Breakpoints (reference only — @media cannot use CSS variables) */
+  --bp-sm: 600px;
+  --bp-md: 768px;
+  --bp-lg: 960px;
+  --bp-xl: 1200px;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  /* Motion */
+  --duration-fast: 0.2s;
+  --duration: 0.3s;
+  --ease: ease;
+
+  /* Legacy aliases — keep existing component var() lookups working */
+  --color-muted: var(--color-text-muted);
+  --color-card-bg: #2c2c2c;
+  --color-card-border: #444;
+  --color-primary: var(--color-accent);
+  --color-primary-hover: var(--color-accent-hover);
   --color-button-bg: #333;
   --color-button-hover: #444;
-  --color-primary: #00bcd4;
-  --color-primary-hover: #0097a7;
+  --color-scrollbar: #555;
+  --color-scrollbar-hover: #888;
 
   color-scheme: dark;
   color: var(--color-text);
@@ -32,7 +115,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+
   scroll-behavior: smooth;
 }
 
@@ -45,47 +128,71 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--color-bg);
+  color: var(--color-text);
   overflow-x: hidden;
 }
 
 a {
-  font-weight: 500;
-  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-accent);
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: color var(--duration) var(--ease);
 }
 
 a:hover {
-  color: var(--color-primary-hover);
+  color: var(--color-accent-hover);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-tight);
   color: var(--color-text);
 }
 
 button {
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   font-family: inherit;
   background-color: var(--color-button-bg);
   color: var(--color-text);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition:
+    background-color var(--duration) var(--ease),
+    border-color var(--duration) var(--ease),
+    color var(--duration) var(--ease);
 }
 
 button:hover {
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
   background-color: var(--color-button-hover);
 }
 
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* Keyboard focus — do not remove; mouse users skip via :focus-visible */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 3px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 3px;
 }
 
 #app {
@@ -93,7 +200,100 @@ button:focus-visible {
   min-height: 100vh;
 }
 
-/* Smooth scrollbar */
+/* =========================
+   Layout primitives
+   Adopt these in later passes; do not double-pad with old section CSS.
+========================= */
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--section-padding-x);
+}
+
+.container--narrow {
+  max-width: var(--container-narrow);
+}
+
+.section {
+  padding-block: var(--section-padding-y);
+}
+
+.section-title {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  text-align: center;
+  margin: 0 0 var(--space-4);
+}
+
+/* =========================
+   Buttons
+========================= */
+
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0.85rem 1.75rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    background-color var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease);
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-hover);
+  color: var(--color-bg);
+}
+
+.btn-secondary {
+  background: transparent;
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 3px;
+}
+
+/* =========================
+   Card
+========================= */
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -111,8 +311,26 @@ button:focus-visible {
   background: var(--color-scrollbar-hover);
 }
 
-/* Selection */
 ::selection {
-  background: var(--color-primary);
+  background: var(--color-accent);
   color: var(--color-bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  :root {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

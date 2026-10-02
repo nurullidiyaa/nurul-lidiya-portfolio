@@ -2,6 +2,7 @@
   <section id="projects" class="projects">
     <div class="container">
       <h2 class="section-title">My Projects</h2>
+
       <p class="section-subtitle">
         A selection of commercial internship projects and personal technical work showcasing real-world application.
       </p>
@@ -15,9 +16,9 @@
           <div class="project-content">
             <div class="project-info">
               <span class="project-role">{{ project.role }}</span>
+
               <h3 class="project-title">{{ project.title }}</h3>
 
-              <!-- TECH STACK BADGES -->
               <div class="tech-stack">
                 <span v-for="tech in project.techStack" :key="tech" class="tech-badge">
                   {{ tech }}
@@ -28,7 +29,6 @@
             </div>
 
             <div class="project-links">
-              <!-- Action Button 1 (External / Demo) -->
               <a
                 v-if="project.links.external"
                 :href="project.links.external"
@@ -39,7 +39,6 @@
                 {{ project.links.externalLabel }}
               </a>
 
-              <!-- Action Button 2 (Case Study) -->
               <a
                 v-if="project.links.internal"
                 :href="project.links.internal"
@@ -50,7 +49,6 @@
                 {{ project.links.internalLabel }}
               </a>
 
-              <!-- GitHub Link-->
               <a
                 v-else-if="project.links.github"
                 :href="project.links.github"
@@ -75,7 +73,7 @@ const projects = [
     title: 'Fine Ways Travel Website',
     role: 'Frontend Developer Intern',
     techStack: ['HTML', 'CSS', 'JavaScript', 'Domain/DNS Setup'],
-    description: 'Developed and deployed a responsive travel company website during my internship. Handled UI implementation, content updates, deployment, domain configuration and basic SEO.',
+    description: 'Developed and deployed a responsive travel company website. Handled UI implementation, deployment, domain configuration and basic SEO.',
     image: '/fineway.jpg',
     links: {
       external: 'https://www.finewaystravel.com.my/',
@@ -89,7 +87,7 @@ const projects = [
     title: 'Fine Cafe Website',
     role: 'Frontend Developer Intern',
     techStack: ['Next.js', 'React', 'Tailwind CSS'],
-    description: 'Completed responsive café website using Next.js, React and Tailwind CSS with modern UI components and interactive elements.',
+    description: 'Completed responsive café website using Next.js, React and Tailwind CSS with modern UI.',
     image: '/finecafe.jpg',
     links: {
       external: 'https://remarkable-biscochitos-9fa1c5.netlify.app/',
@@ -103,7 +101,7 @@ const projects = [
     title: 'Personal Developer Portfolio',
     role: 'Personal Project',
     techStack: ['Vue 3', 'Vite', 'Vue Router'],
-    description: 'Personal developer portfolio built with Vue 3 and Vite, featuring reusable components, Vue Router navigation, responsive layouts and interactive UI elements.',
+    description: 'Personal developer portfolio built with Vue 3 and Vite, featuring reusable components, Vue Router navigation and responsive layouts.',
     image: '/portfolio.jpg',
     links: {
       external: 'https://nurul-lidiya-portfolio.vercel.app/',
@@ -117,7 +115,14 @@ const projects = [
 
 <style scoped>
 .projects {
-  background: #121212;
+  position: relative;
+  background:
+    radial-gradient(
+      700px 220px at top center,
+      rgba(0, 188, 212, 0.035),
+      transparent 70%
+    ),
+    #121212;
   padding: 100px 2rem;
   color: #f5f5f5;
 }
@@ -136,20 +141,20 @@ const projects = [
 }
 
 .section-subtitle {
+  max-width: 720px;
+  margin: 0 auto 3.5rem;
   text-align: center;
   color: rgba(245, 245, 245, 0.7);
   font-size: 1.1rem;
-  margin-bottom: 3.5rem;
+  line-height: 1.6;
 }
 
-/* GRID */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
 
-/* CARD LAYOUT FIX */
 .project-card {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -166,7 +171,6 @@ const projects = [
   box-shadow: 0 12px 30px rgba(0, 188, 212, 0.15);
 }
 
-/* IMAGE FIX */
 .project-image {
   width: 100%;
   height: 200px;
@@ -185,7 +189,6 @@ const projects = [
   transform: scale(1.05);
 }
 
-/* CONTENT ALIGNMENT */
 .project-content {
   padding: 1.5rem;
   display: flex;
@@ -211,7 +214,6 @@ const projects = [
   margin-bottom: 0.4rem;
 }
 
-/* TECH STACK BADGES */
 .tech-stack {
   display: flex;
   flex-wrap: wrap;
@@ -241,7 +243,6 @@ const projects = [
   gap: 0.8rem;
 }
 
-/* BUTTONS */
 .btn {
   flex: 1;
   padding: 0.65rem 1.2rem;
@@ -273,5 +274,131 @@ const projects = [
   background: rgba(255, 255, 255, 0.08);
   border-color: #f5f5f5;
   transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .projects {
+    padding: 65px 0.9rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-subtitle {
+    max-width: 310px;
+    margin: 0 auto 1.7rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .project-card {
+    border-radius: 11px;
+  }
+
+  .project-card:hover {
+    transform: none;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+  }
+
+  .project-card:active {
+    transform: translateY(-2px) scale(0.99);
+    border-color: rgba(0, 188, 212, 0.4);
+    box-shadow: 0 8px 20px rgba(0, 188, 212, 0.12);
+  }
+
+  .project-image {
+    height: 145px;
+  }
+
+  .project-card:hover .project-image img {
+    transform: none;
+  }
+
+  .project-card:active .project-image img {
+    transform: scale(1.01);
+  }
+
+  .project-content {
+    padding: 0.95rem;
+  }
+
+  .project-role {
+    font-size: 0.62rem;
+    letter-spacing: 0.45px;
+    margin-bottom: 0.2rem;
+  }
+
+  .project-title {
+    font-size: 1rem;
+    line-height: 1.3;
+    margin-bottom: 0.55rem;
+  }
+
+  .tech-stack {
+    gap: 0.3rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .tech-badge {
+    font-size: 0.6rem;
+    padding: 0.18rem 0.4rem;
+    border-radius: 4px;
+  }
+
+  .project-description {
+    font-size: 0.76rem;
+    line-height: 1.55;
+    margin-bottom: 0.9rem;
+  }
+
+  .project-links {
+    gap: 0.45rem;
+  }
+
+  .btn {
+    padding: 0.52rem 0.55rem;
+    border-radius: 7px;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .projects {
+    padding: 55px 0.8rem;
+  }
+
+  .section-title {
+    font-size: 1.7rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.78rem;
+    max-width: 290px;
+  }
+
+  .project-image {
+    height: 130px;
+  }
+
+  .project-content {
+    padding: 0.85rem;
+  }
+
+  .project-description {
+    font-size: 0.72rem;
+  }
+
+  .btn {
+    font-size: 0.68rem;
+    padding: 0.5rem 0.45rem;
+  }
 }
 </style>

@@ -1,109 +1,81 @@
 <template>
   <section id="contact" class="contact">
-    <div class="container">
-      <h2 class="section-title">Let's Connect</h2>
-      <p class="intro">
-        I'm currently open to junior frontend and web development opportunities. Feel free to reach out directly or send a message below.
-      </p>
+    <div class="contact-container">
+      <div class="section-header">
+        <h2 class="section-title">Let's Connect</h2>
+        <p class="section-subtitle">
+          I'm currently open to junior frontend and web development opportunities.
+          Feel free to reach out through the form below.
+        </p>
+      </div>
 
-      <div class="contact-split">
-        <!-- LEFT: DIRECT CHANNELS -->
-        <div class="contact-info">
-          <h3>Get In Touch Directly</h3>
-          <p class="info-desc">
-            Prefer direct channels? You can email me directly or start a chat via WhatsApp for a quick discussion.
-          </p>
-
-          <div class="direct-buttons">
-            <a href="mailto:nurullidiyaa@gmail.com" class="direct-btn email-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
-                <rect width="20" height="16" x="2" y="4" rx="2"/>
-                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-              </svg>
-              <span>Email Me</span>
-            </a>
-
-            <a href="https://wa.link/og9qr6" target="_blank" rel="noopener noreferrer" class="direct-btn wa-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon">
-                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
-              </svg>
-              <span>WhatsApp Me</span>
-            </a>
-          </div>
-
-          <div class="social-list">
-            <p>Connect on professional networks:</p>
-            <div class="links">
-              <a href="https://www.linkedin.com/in/nurul-lidiya/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-              <a href="https://github.com/nurullidiyaa" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-            </div>
-          </div>
+      <form class="contact-form" @submit.prevent="sendEmail">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            id="name"
+            v-model="form.name"
+            type="text"
+            name="name"
+            placeholder="Your name"
+            required
+          />
         </div>
 
-        <!-- RIGHT: CONTACT FORM -->
-        <form class="contact-form" @submit.prevent="handleSubmit">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              v-model="form.name"
-              placeholder="Your name"
-              required
-            />
-          </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            v-model="form.email"
+            type="email"
+            name="email"
+            placeholder="your@email.com"
+            required
+          />
+        </div>
 
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              v-model="form.email"
-              placeholder="you@example.com"
-              required
-            />
-          </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input
+            id="subject"
+            v-model="form.subject"
+            type="text"
+            name="subject"
+            placeholder="What would you like to talk about?"
+            required
+          />
+        </div>
 
-          <div class="form-group">
-            <label for="subject">Subject</label>
-            <input
-              type="text"
-              id="subject"
-              v-model="form.subject"
-              placeholder="Project / Job Opportunity"
-              required
-            />
-          </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea
+            id="message"
+            v-model="form.message"
+            name="message"
+            rows="5"
+            placeholder="Write your message..."
+            required
+          ></textarea>
+        </div>
 
-          <div class="form-group">
-            <label for="message">Message</label>
-            <textarea
-              id="message"
-              rows="4"
-              v-model="form.message"
-              placeholder="Tell me more about it..."
-              required
-            ></textarea>
-          </div>
+        <button type="submit" class="submit-button" :disabled="isSending">
+          {{ isSending ? 'Sending...' : 'Send Message' }}
+        </button>
 
-          <button type="submit" :disabled="loading">
-            {{ loading ? 'Sending...' : 'Send Message' }}
-          </button>
+        <p v-if="successMessage" class="form-message success">
+          {{ successMessage }}
+        </p>
 
-          <p v-if="successMessage" class="success-msg">
-            {{ successMessage }}
-          </p>
-          <p v-if="errorMessage" class="error-msg">
-            {{ errorMessage }}
-          </p>
-        </form>
-      </div>
+        <p v-if="errorMessage" class="form-message error">
+          {{ errorMessage }}
+        </p>
+      </form>
     </div>
   </section>
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import emailjs from '@emailjs/browser'
 
 const form = reactive({
@@ -113,37 +85,31 @@ const form = reactive({
   message: ''
 })
 
-const loading = ref(false)
+const isSending = ref(false)
 const successMessage = ref('')
 const errorMessage = ref('')
 
+const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
 onMounted(() => {
-  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
   if (publicKey) {
     emailjs.init(publicKey)
   }
 })
 
-const handleSubmit = async () => {
-  loading.value = true
+const sendEmail = async () => {
+  if (isSending.value) return
+
+  isSending.value = true
   successMessage.value = ''
   errorMessage.value = ''
 
-  const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID
-  const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
-  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-
-  if (!serviceID || !templateID || !publicKey) {
-    console.error('EmailJS env variables missing')
-    errorMessage.value = 'Configuration error. Please check environment variables.'
-    loading.value = false
-    return
-  }
-
   try {
     await emailjs.send(
-      serviceID,
-      templateID,
+      serviceId,
+      templateId,
       {
         name: form.name,
         email: form.email,
@@ -153,17 +119,17 @@ const handleSubmit = async () => {
       publicKey
     )
 
-    successMessage.value = 'Thank you! Your message has been sent successfully.'
+    successMessage.value = 'Message sent successfully. Thank you for reaching out!'
 
     form.name = ''
     form.email = ''
     form.subject = ''
     form.message = ''
-  } catch (err) {
-    console.error('EmailJS Error:', err)
-    errorMessage.value = err?.text || 'Oops! Something went wrong. Please try again later.'
+  } catch (error) {
+    console.error('EmailJS error:', error)
+    errorMessage.value = 'Something went wrong. Please try again later.'
   } finally {
-    loading.value = false
+    isSending.value = false
   }
 }
 </script>
@@ -171,214 +137,220 @@ const handleSubmit = async () => {
 <style scoped>
 .contact {
   padding: 100px 2rem;
-  background: #121212;
+  background:
+    radial-gradient(
+      700px 220px at top center,
+      rgba(0, 188, 212, 0.035),
+      transparent 70%
+    ),
+    #121212;
   color: #f5f5f5;
 }
 
-.container {
-  max-width: 1100px;
+.contact-container {
+  max-width: 760px;
   margin: 0 auto;
 }
 
-.section-title {
+.section-header {
   text-align: center;
+  margin-bottom: 2.8rem;
+}
+
+.section-title {
+  margin: 0 0 0.7rem;
   font-size: 2.8rem;
   font-weight: 700;
-  color: var(--color-accent, #00bcd4);
-  margin-bottom: 0.5rem;
+  letter-spacing: -0.03em;
 }
 
-.intro {
-  text-align: center;
-  color: rgba(245, 245, 245, 0.7);
-  font-size: 1.1rem;
-  max-width: 650px;
-  margin: 0 auto 3.5rem;
-  line-height: 1.6;
+.section-subtitle {
+  max-width: 600px;
+  margin: 0 auto;
+  color: rgba(245, 245, 245, 0.62);
+  font-size: 1rem;
+  line-height: 1.7;
 }
 
-/* SPLIT LAYOUT */
-.contact-split {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 3rem;
-  align-items: start;
-}
-
-/* LEFT DIRECT INFO CARD */
-.contact-info {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 2.5rem;
-  border-radius: 20px;
-  text-align: left;
-}
-
-.contact-info h3 {
-  font-size: 1.4rem;
-  color: #f5f5f5;
-  margin-bottom: 0.8rem;
-}
-
-.info-desc {
-  color: rgba(245, 245, 245, 0.7);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-}
-
-.direct-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.direct-btn {
-  padding: 0.85rem 1.2rem;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 600;
-  text-align: center;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.email-btn {
-  background: var(--color-accent, #00bcd4);
-  color: #121212;
-}
-
-.email-btn:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
-}
-
-.wa-btn {
-  background: rgba(76, 175, 80, 0.15);
-  border: 1px solid rgba(76, 175, 80, 0.4);
-  color: #81c784;
-}
-
-.wa-btn:hover {
-  background: #4caf50;
-  color: #121212;
-  transform: translateY(-2px);
-}
-
-.social-list p {
-  font-size: 0.88rem;
-  color: rgba(245, 245, 245, 0.5);
-  margin-bottom: 0.6rem;
-}
-
-.social-list .links {
-  display: flex;
-  gap: 1.2rem;
-}
-
-.social-list a {
-  color: var(--color-accent, #00bcd4);
-  text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
-
-.social-list a:hover {
-  text-decoration: underline;
-}
-
-/* RIGHT CONTACT FORM */
 .contact-form {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 2.5rem;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.018);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
 }
 
 .form-group {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
+  margin-bottom: 1.3rem;
 }
 
 .form-group label {
-  margin-bottom: 0.4rem;
-  font-size: 0.88rem;
-  color: rgba(245, 245, 245, 0.7);
+  display: block;
+  margin-bottom: 0.5rem;
+  color: rgba(245, 245, 245, 0.85);
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .form-group input,
 .form-group textarea {
-  padding: 0.85rem 1rem;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(0, 0, 0, 0.25);
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.035);
   color: #f5f5f5;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
+  font-family: inherit;
+  font-size: 0.85rem;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
 }
 
-.form-group input:hover,
-.form-group textarea:hover {
-  border-color: rgba(255, 255, 255, 0.25);
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(245, 245, 245, 0.3);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  outline: none;
-  border-color: var(--color-accent, #00bcd4);
-  box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.15);
+  border-color: rgba(0, 188, 212, 0.45);
+  background: rgba(255, 255, 255, 0.045);
 }
 
-button[type='submit'] {
-  margin-top: 0.5rem;
-  padding: 0.85rem 1.5rem;
-  border-radius: 10px;
-  background: var(--color-accent, #00bcd4);
-  color: #121212;
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.submit-button {
+  width: 100%;
+  margin-top: 0.3rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(0, 188, 212, 0.45);
+  border-radius: 8px;
+  background: rgba(0, 188, 212, 0.1);
+  color: #f5f5f5;
+  font-family: inherit;
+  font-size: 0.85rem;
   font-weight: 600;
-  border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
-button[type='submit']:hover:not(:disabled) {
-  opacity: 0.9;
-  transform: translateY(-2px);
+.submit-button:hover:not(:disabled) {
+  background: rgba(0, 188, 212, 0.16);
+  border-color: rgba(0, 188, 212, 0.65);
+  transform: translateY(-1px);
 }
 
-button:disabled {
-  opacity: 0.5;
+.submit-button:disabled {
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
-.success-msg {
-  color: #81c784;
-  font-size: 0.9rem;
+.form-message {
+  margin: 1rem 0 0;
   text-align: center;
-  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  line-height: 1.5;
 }
 
-.error-msg {
-  color: #e57373;
-  font-size: 0.9rem;
-  text-align: center;
-  margin-top: 0.5rem;
+.success {
+  color: #7dd3c7;
 }
 
-/* RESPONSIVE */
-@media (max-width: 868px) {
-  .contact-split {
-    grid-template-columns: 1fr;
+.error {
+  color: #f59e9e;
+}
+
+@media (max-width: 768px) {
+  .contact {
+    padding: 65px 0.9rem 70px;
+  }
+
+  .section-header {
+    margin-bottom: 1.8rem;
+  }
+
+  .section-title {
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+  }
+
+  .section-subtitle {
+    max-width: 315px;
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
+  .contact-form {
+    padding: 1rem;
+    border-radius: 11px;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    margin-bottom: 0.4rem;
+    font-size: 0.72rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 0.65rem 0.75rem;
+    border-radius: 7px;
+    font-size: 0.76rem;
+  }
+
+  .form-group textarea {
+    min-height: 95px;
+  }
+
+  .submit-button {
+    padding: 0.68rem 0.8rem;
+    border-radius: 7px;
+    font-size: 0.75rem;
+  }
+
+  .form-message {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .contact {
+    padding: 55px 0.8rem 60px;
+  }
+
+  .section-title {
+    font-size: 1.7rem;
+  }
+
+  .section-subtitle {
+    max-width: 290px;
+    font-size: 0.78rem;
+  }
+
+  .contact-form {
+    padding: 0.9rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 0.72rem;
+  }
+
+  .form-group textarea {
+    min-height: 90px;
   }
 }
 </style>
