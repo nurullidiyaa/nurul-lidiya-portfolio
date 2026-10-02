@@ -1,19 +1,41 @@
 <template>
   <section ref="aboutRef" id="about" class="about">
     <div class="container">
-      <!-- TITLE -->
-      <h2 class="section-title" :class="{ animate: isVisible }">About Me</h2>
 
-      <!-- INTRO + CARD -->
+      <!-- TITLE -->
+      <h2 class="section-title" :class="{ animate: isVisible }">
+        About Me
+      </h2>
+
+      <!-- INTRO -->
       <div class="about-top" :class="{ animate: isVisible }">
-        <!-- INTRO TEXT -->
         <div class="about-intro">
-          <p class="lead">
-            Computer Science (Multimedia Computing) graduate from Universiti Teknologi MARA with hands-on experience in frontend development, responsive web design and web-based projects. I enjoy building practical digital solutions with a focus on usability, clean interfaces and reliable functionality.
+
+          <!-- DESKTOP INTRO -->
+          <div class="desktop-intro">
+            <p class="lead">
+              Computer Science (Multimedia Computing) graduate with hands-on
+              experience in frontend development, responsive web design and
+              website deployment. I enjoy building clean, practical interfaces
+              that are easy to use and work well across devices.
+            </p>
+
+            <p>
+              During my internship, I developed and maintained company websites
+              while gaining experience in UI improvements, testing and
+              troubleshooting. I’m currently looking for a junior frontend or
+              web development role where I can continue building my skills and
+              contribute to real-world projects.
+            </p>
+          </div>
+
+          <!-- MOBILE INTRO -->
+          <p class="mobile-intro">
+            Computer Science graduate with hands-on experience in frontend development,
+            responsive web design and website deployment. I enjoy building clean,
+            practical interfaces that are easy to use and work well across devices.
           </p>
-          <p>
-            During my internship at Fine Ways Travel & Tours, I developed and maintained company websites, implemented UI improvements and managed live deployments. I also gained experience in testing, troubleshooting and working through multiple revisions based on business requirements. I’m currently looking for a junior role where I can apply my technical skills while continuing to grow in a professional environment.
-          </p>
+
         </div>
       </div>
 
@@ -23,13 +45,15 @@
           <span class="stat-number">3.30</span>
           <span class="stat-label">CGPA</span>
         </div>
+
         <div class="stat-item">
           <span class="stat-number">2</span>
-          <span class="stat-label">Industry Placements</span>
+          <span class="stat-label">Placements</span>
         </div>
+
         <div class="stat-item">
-          <span class="stat-number">Immediate</span>
-          <span class="stat-label">Availability</span>
+          <span class="stat-number">Available</span>
+          <span class="stat-label">Now</span>
         </div>
       </div>
 
@@ -38,20 +62,21 @@
         <div class="highlight-card">
           <h4>Academic & Innovation Highlights</h4>
           <ul>
-            <li>Gold Award – V-PRIDE 2025 Innovation Showcase</li>
-            <li>Dean’s List – Two consecutive semesters</li>
+            <li>Gold Award — V-PRIDE 2025</li>
+            <li>Dean’s List — 2 semesters</li>
           </ul>
         </div>
 
         <div class="highlight-card">
           <h4>Technical & Professional Highlights</h4>
           <ul>
-            <li>Developed and deployed responsive company websites</li>
-            <li>Performed website testing, UI improvements and issue identification</li>
-            <li>Worked with stakeholders to implement content and design revisions</li>
+            <li>Developed and deployed responsive websites</li>
+            <li>Performed UI testing and issue identification</li>
+            <li>Implemented content and design updates</li>
           </ul>
         </div>
       </div>
+
     </div>
   </section>
 </template>
@@ -64,9 +89,14 @@ const aboutRef = ref(null)
 
 onMounted(() => {
   const observer = new IntersectionObserver(
-    ([entry]) => entry.isIntersecting && (isVisible.value = true),
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        isVisible.value = true
+      }
+    },
     { threshold: 0.2 }
   )
+
   if (aboutRef.value) {
     observer.observe(aboutRef.value)
   }
@@ -74,28 +104,54 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* =========================
+   ABOUT SECTION
+========================= */
+
 .about {
-  padding: 120px 2rem;
+  position: relative;
+  padding: 100px 2rem;
   background:
     radial-gradient(
       700px 220px at top center,
-      rgba(0, 188, 212, 0.08),
+      rgba(0, 188, 212, 0.06),
       transparent 70%
     ),
     var(--color-bg, #121212);
 }
 
+.about::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 188, 212, 0.22),
+    transparent
+  );
+}
+
 .container {
-  max-width: 1100px;
+  width: 100%;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
-/* TITLE */
+
+/* =========================
+   SECTION TITLE
+========================= */
+
 .section-title {
-  font-size: 2.8rem;
+  margin: 0 0 3rem;
+  font-size: 2.5rem;
+  line-height: 1.2;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 3.5rem;
   color: var(--color-text, #f5f5f5);
   opacity: 0;
   transform: translateY(20px);
@@ -107,19 +163,18 @@ onMounted(() => {
   transform: translateY(0);
 }
 
+
+/* =========================
+   INTRO
+========================= */
+
 .about-top {
   display: flex;
   justify-content: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
   opacity: 0;
   transform: translateY(30px);
   transition: 0.8s ease 0.1s;
-}
-
-.about-intro {
-  width: 100%;
-  max-width: 900px;
-  text-align: left;
 }
 
 .about-top.animate {
@@ -127,62 +182,40 @@ onMounted(() => {
   transform: translateY(0);
 }
 
-/* INTRO */
+.about-intro {
+  width: 100%;
+  max-width: 850px;
+}
+
 .about-intro .lead {
-  font-size: 1.18rem;
-  line-height: 1.7;
+  margin: 0 0 1.1rem;
+  font-size: 1.08rem;
+  line-height: 1.75;
   font-weight: 400;
-  margin-bottom: 1.2rem;
   color: var(--color-text, #f5f5f5);
 }
 
 .about-intro p {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  margin-bottom: 1rem;
-  color: var(--color-muted, #ccc);
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-muted, #aaa);
 }
 
-/* CARD */
-.about-card {
-  background: linear-gradient(135deg, rgba(0, 188, 212, 0.08), rgba(0, 188, 212, 0.03));
-  border-radius: 16px;
-  padding: 1.8rem 1.5rem;
-  text-align: center;
-  border: 1px solid rgba(0, 188, 212, 0.2);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.mobile-intro {
+  display: none;
 }
 
-.about-card h3 {
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: var(--color-text, #f5f5f5);
-}
 
-.btn-contact {
-  padding: 0.75rem 1.8rem;
-  border-radius: 8px;
-  background: var(--color-accent, #00bcd4);
-  color: #121212;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
+/* =========================
+   STATS
+========================= */
 
-.btn-contact:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 188, 212, 0.3);
-}
-
-/* STATS */
 .stats-row {
-  display: flex;
-  gap: 1.5rem;
-  margin-bottom: 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2.5rem;
   opacity: 0;
   transform: translateY(30px);
   transition: 0.8s ease 0.2s;
@@ -194,11 +227,14 @@ onMounted(() => {
 }
 
 .stat-item {
-  flex: 1;
-  background: var(--color-card-bg, rgba(255, 255, 255, 0.03));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 1.5rem;
+  min-height: 120px;
+  padding: 1.2rem 1rem;
+  background: var(
+    --color-card-bg,
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -207,23 +243,29 @@ onMounted(() => {
 }
 
 .stat-number {
-  font-size: 2.2rem;
+  margin-bottom: 0.25rem;
+  font-size: 1.8rem;
+  line-height: 1.2;
   font-weight: 700;
   color: var(--color-accent, #00bcd4);
-  margin-bottom: 0.3rem;
 }
 
 .stat-label {
-  font-size: 0.95rem;
+  font-size: 0.82rem;
+  line-height: 1.3;
   color: var(--color-muted, #aaa);
   font-weight: 500;
 }
 
-/* HIGHLIGHTS GRID */
+
+/* =========================
+   HIGHLIGHTS
+========================= */
+
 .highlights-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
   opacity: 0;
   transform: translateY(30px);
   transition: 0.8s ease 0.3s;
@@ -235,42 +277,152 @@ onMounted(() => {
 }
 
 .highlight-card {
-  background: var(--color-card-bg, rgba(255, 255, 255, 0.03));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-left: 4px solid var(--color-accent, #00bcd4);
-  padding: 1.8rem;
-  border-radius: 16px;
+  padding: 1.4rem;
+  background: var(
+    --color-card-bg,
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-left: 3px solid var(--color-accent, #00bcd4);
+  border-radius: 12px;
 }
 
 .highlight-card h4 {
-  font-size: 1.2rem;
+  margin: 0 0 0.9rem;
+  font-size: 1rem;
+  line-height: 1.4;
   font-weight: 600;
-  margin-bottom: 1rem;
   color: var(--color-accent, #00bcd4);
 }
 
 .highlight-card ul {
-  padding-left: 1.2rem;
   margin: 0;
+  padding-left: 1.1rem;
 }
 
 .highlight-card li {
-  margin-bottom: 0.6rem;
-  font-size: 0.98rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
   color: var(--color-text, #f5f5f5);
-  line-height: 1.6;
 }
 
-/* RESPONSIVE */
+.highlight-card li:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
 @media (max-width: 992px) {
-  .about-top {
-    grid-template-columns: 1fr;
+  .about {
+    padding: 90px 1.5rem;
   }
+
   .stats-row {
-    flex-direction: column;
+    grid-template-columns: repeat(3, 1fr);
   }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+  .about {
+    padding: 65px 1rem 70px;
+    border-top: 1px solid rgba(0, 188, 212, 0.16);
+  }
+
+  .container {
+    max-width: 100%;
+  }
+
+  /* TITLE */
+  .section-title {
+    margin-bottom: 1.5rem;
+    font-size: 1.85rem;
+    line-height: 1.2;
+  }
+
+  /* INTRO */
+  .desktop-intro {
+    display: none;
+  }
+
+  .mobile-intro {
+    display: block;
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--color-muted, #aaa);
+  }
+
+  .about-top {
+    margin-bottom: 1.8rem;
+  }
+
+  /* STATS */
+  .stats-row {
+    gap: 0.55rem;
+    margin-bottom: 0;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .stat-item {
+    min-height: 84px;
+    padding: 0.7rem 0.35rem;
+    border-radius: 10px;
+  }
+
+  .stat-number {
+    margin-bottom: 0.2rem;
+    font-size: 1.2rem;
+  }
+
+  .stat-label {
+    font-size: 0.66rem;
+    line-height: 1.25;
+  }
+
+  /* HIDE HIGHLIGHTS ON MOBILE */
   .highlights-grid {
-    grid-template-columns: 1fr;
+    display: none;
+  }
+}
+
+
+/* =========================
+   VERY SMALL PHONES
+========================= */
+
+@media (max-width: 360px) {
+  .about {
+    padding: 55px 0.85rem 65px;
+  }
+
+  .section-title {
+    font-size: 1.7rem;
+  }
+
+  .mobile-intro {
+    font-size: 0.86rem;
+    line-height: 1.6;
+  }
+
+  .stat-item {
+    min-height: 80px;
+  }
+
+  .stat-number {
+    font-size: 1.05rem;
+  }
+
+  .stat-label {
+    font-size: 0.61rem;
   }
 }
 </style>

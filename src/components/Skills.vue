@@ -2,6 +2,7 @@
   <section id="skills" class="skills">
     <div class="container">
       <h2 class="section-title">Technical Skills</h2>
+
       <p class="section-subtitle">
         Core technologies and workflows I use to build responsive, user-focused web experiences and applications.
       </p>
@@ -9,15 +10,18 @@
       <div class="skills-categories">
         <div v-for="category in skillCategories" :key="category.title" class="category-card">
           <h3 class="category-title">{{ category.title }}</h3>
+
           <div class="skills-tags">
             <div v-for="skill in category.items" :key="skill.name" class="skill-tag">
-              <img 
-                v-if="skill.icon" 
-                :src="skill.icon" 
-                :alt="skill.name" 
-                class="skill-icon" 
+              <img
+                v-if="skill.icon"
+                :src="skill.icon"
+                :alt="skill.name"
+                class="skill-icon"
               />
+
               <span class="skill-badge-dot" v-else></span>
+
               <span>{{ skill.name }}</span>
             </div>
           </div>
@@ -64,10 +68,10 @@ const skillCategories = [
   background:
     radial-gradient(
       700px 220px at top center,
-      rgba(0, 188, 212, 0.08),
+      rgba(0, 188, 212, 0.045),
       transparent 70%
     ),
-    var(--color-bg, #121212);
+    #121212;
   color: #f5f5f5;
 }
 
@@ -93,14 +97,12 @@ const skillCategories = [
   margin: 0 auto 3.5rem;
 }
 
-/* CATEGORIES GRID */
 .skills-categories {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
 }
 
-/* CATEGORY CARD */
 .category-card {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -123,7 +125,6 @@ const skillCategories = [
   padding-bottom: 0.6rem;
 }
 
-/* SKILLS TAGS / BADGES */
 .skills-tags {
   display: flex;
   flex-wrap: wrap;
@@ -163,10 +164,91 @@ const skillCategories = [
   display: inline-block;
 }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
+  .skills {
+    padding: 65px 0.9rem 70px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-subtitle {
+    max-width: 315px;
+    margin: 0 auto 1.8rem;
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
   .skills-categories {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .category-card {
+    padding: 1rem;
+    border-radius: 11px;
+  }
+
+  .category-title {
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .skills-tags {
+    gap: 0.4rem;
+  }
+
+  .skill-tag {
+    gap: 0.4rem;
+    padding: 0.42rem 0.65rem;
+    border-radius: 7px;
+    font-size: 0.72rem;
+  }
+
+  .skill-icon {
+    width: 17px;
+    height: 17px;
+  }
+
+  .skill-badge-dot {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+@media (max-width: 360px) {
+  .skills {
+    padding: 55px 0.8rem 60px;
+  }
+
+  .section-title {
+    font-size: 1.7rem;
+  }
+
+  .section-subtitle {
+    max-width: 290px;
+    font-size: 0.78rem;
+  }
+
+  .category-card {
+    padding: 0.9rem;
+  }
+
+  .category-title {
+    font-size: 0.9rem;
+  }
+
+  .skill-tag {
+    font-size: 0.68rem;
+    padding: 0.38rem 0.55rem;
+  }
+
+  .skill-icon {
+    width: 16px;
+    height: 16px;
   }
 }
 </style>
